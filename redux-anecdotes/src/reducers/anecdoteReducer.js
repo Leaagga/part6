@@ -40,7 +40,7 @@ const anecdoteSlice =createSlice({
           id:getId(),
           votes:0
         }
-        state.push(newAnecdote).sort((a,b)=>b.votes-a.votes)
+        state.push(newAnecdote)
     }
   }})
 
