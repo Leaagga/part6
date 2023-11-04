@@ -8,7 +8,8 @@ const Filter=()=>{
     dispatch(filterChange(filteringAnecdote))
   }
   const style={
-    marginBottom:10
+    marginBottom:10,
+    marginTop:10
   }
   return(
     <div style={style}>
