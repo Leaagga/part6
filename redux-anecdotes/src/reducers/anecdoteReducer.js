@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
+
 // const anecdotesAtStart = [
 //   'If it hurts, do it more often',
 //   'Adding manpower to a late software project makes it later!',
@@ -8,7 +9,7 @@ import { createSlice } from "@reduxjs/toolkit"
 //   'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 // ]
 
-const getId = () => (100000 * Math.random()).toFixed(0)
+// const getId = () => (100000 * Math.random()).toFixed(0)
 
 // const asObject = (anecdote) => {
 //   return {
@@ -35,12 +36,7 @@ const anecdoteSlice =createSlice({
     ,
     createAnecdote(state,action){
         const newContent=action.payload
-        const newAnecdote = {
-          content:newContent,
-          id:getId(),
-          votes:0
-        }
-        state.push(newAnecdote)
+        state.push(newContent)     
     },
     setAnecdote(state,action){
       console.log(state)
@@ -50,4 +46,5 @@ const anecdoteSlice =createSlice({
   }})
 
 export const { createAnecdote, voteAnecdote, setAnecdote }=anecdoteSlice.actions
+
 export default anecdoteSlice.reducer
