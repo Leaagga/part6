@@ -2,6 +2,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { voteAnecdote } from '../reducers/anecdoteReducer'
 import { resetNotification, setNotification } from '../reducers/notificationReducer'
 const AnecodoteList=()=>{
+  const dispatch = useDispatch()
+  
   const anecdotes = useSelector(state =>{
     console.log(state)
     if (state.filter=='ALL'){
@@ -13,7 +15,7 @@ const AnecodoteList=()=>{
       })
     )
   })
-  const dispatch = useDispatch()
+
 
   const vote = (id) => {
     console.log('vote', id)
@@ -23,7 +25,7 @@ const AnecodoteList=()=>{
   }
   return(
   <div>
-    {anecdotes.map(anecdote =>
+    {anecdotes?anecdotes.map(anecdote =>
         <div key={anecdote.id}>
           <div>
             {anecdote.content}
@@ -33,7 +35,7 @@ const AnecodoteList=()=>{
             <button onClick={() => vote(anecdote.id)}>vote</button>
           </div>
         </div>
-      )}
+      ):''}
   </div>)
 }
 export default AnecodoteList
