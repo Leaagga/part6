@@ -9,7 +9,7 @@ import anecodoteService from '../services/anecdote'
 //   'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 // ]
 
-// const getId = () => (100000 * Math.random()).toFixed(0)
+const getId = () => (100000 * Math.random()).toFixed(0)
 
 // const asObject = (anecdote) => {
 //   return {
@@ -34,7 +34,7 @@ const anecdoteSlice =createSlice({
         }
       return state.map(s=>s.id==changedAnecdote.id?changedAnecdote:s).sort((a,b)=>b.votes-a.votes)}
     ,
-    createAnecdote(state,action){
+    appendAnecdote(state,action){
         const newContent=action.payload
         state.push(newContent)     
     },
@@ -45,11 +45,22 @@ const anecdoteSlice =createSlice({
     }
   }})
 
-export const { createAnecdote, voteAnecdote, setAnecdote }=anecdoteSlice.actions
+export const { appendAnecdote, voteAnecdote, setAnecdote }=anecdoteSlice.actions
 export const initialAnecdote=()=>{
   return async dispatch=>{
     const Anecdote=await anecodoteService.getAll()
     dispatch(setAnecdote(Anecdote))
+  }
+}
+export const createAnecdote=content=>{
+  return async dispatch=>{
+      const newAnecdote = {
+          content:content,
+          id:getId(),
+          votes:0
+        }
+      const createdAnecdote=await anecodoteService.createNew(newAnecdote)
+      dispatch(appendAnecdote(createdAnecdote))
   }
 }
 export default anecdoteSlice.reducer
