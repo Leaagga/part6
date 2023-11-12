@@ -8,7 +8,9 @@ const counterReducer = (state, action)=>{
       return `Anecodte ${action.text} voted`
     case 'CLEAR':
       return null
-      default:
+    case 'ERROR SHORT':
+      return 'too short ancedote, must have length 5 or more'
+    default:
         return null
   }
 }

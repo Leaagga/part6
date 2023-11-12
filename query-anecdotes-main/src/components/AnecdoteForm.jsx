@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { createAnecdote } from "../requests"
 import { useContext } from "react"
 import CounterContext from "../CounterContext"
-
+import { useQuery } from '@tanstack/react-query'
 const AnecdoteForm = () => {
   const [counter,dispatch]=useContext(CounterContext)
   const queryClient=useQueryClient()
@@ -10,7 +10,8 @@ const AnecdoteForm = () => {
     { mutationFn: createAnecdote,
       onSuccess: (newAnecdote)=>{
         dispatch({type:'CREATE',text:newAnecdote.content})
-        queryClient.invalidateQueries({ queryKey: ['anecdotes'] })}
+        queryClient.invalidateQueries({ queryKey: ['anecdotes'] })},
+        onError:()=>{dispatch({type:'ERROR SHORT'})}
       })
     
   const getId = () => (100000 * Math.random()).toFixed(0)
@@ -20,16 +21,13 @@ const AnecdoteForm = () => {
     event.target.anecdote.value = ''
     console.log('new anecdote')
     console.log(content)
-    if (content.length >=5){
       newAnecdoteMutation.mutate({
         content,
         id:getId(),
         votes:0
       })
-      
-    }else{
-      console.log('anecdote\'s length shorter than 5')
-    }}
+    }
+
   return (
     <div>
       <h3>create new</h3>
